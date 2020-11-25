@@ -1,0 +1,13 @@
+autopep8==1.5.4
+certifi==2020.11.8
+chardet==3.0.4
+dlib==19.21.99
+idna==2.10
+numpy==1.19.3
+opencv-python==4.4.0.46
+pycodestyle==2.6.0
+requests==2.25.0
+toml==0.10.2
+tqdm==4.53.0
+urllib3==1.26.2
+vk==2.0.2
