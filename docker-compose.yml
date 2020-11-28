@@ -1,10 +1,10 @@
 version: '3'
 
 services:
-#  db:
-#    image: postgres
-#    ports:
-#      - "5432:5432"
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
   django:
     build: ./backend
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
@@ -12,16 +12,16 @@ services:
       - ./backend:/api/backend
     ports:
       - "8000:8000"
-#    depends_on:
-#      - db
-#  frontend:
-#    build: ./frontend
-#    command: ["npm", "start"]
-#    volumes:
-#      - ./frontend:/app/frontend
-#      - node-modules:/app/frontend/node_modules
-#    ports:
-#      - "3000:3000"
+    depends_on:
+      - db
+  frontend:
+    build: ./frontend
+    command: ["npm", "start"]
+    volumes:
+      - ./frontend:/app/frontend
+      - node-modules:/app/frontend/node_modules
+    ports:
+      - "3000:3000"
 
-#volumes:
-#  node-modules:
+volumes:
+  node-modules:
