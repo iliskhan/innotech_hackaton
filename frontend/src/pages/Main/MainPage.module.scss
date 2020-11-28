@@ -3,9 +3,85 @@
 }
 
 .containerItem:first-child {
-  background: blue;
+  .leftItemContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    width: 100%;
+    h1 {
+      font-size: 60px;
+      font-weight: 900;
+      margin-bottom: 18px;
+    }
+
+    p {
+      margin-top: 0;
+      font-weight: 600;
+    }
+  }
 }
 
+
 .containerItem:last-child {
-  background: yellow;
+  text-align: center;
+
+  .rightItemContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-around;
+
+    padding: 0 10%;
+
+    .rightItemTitle {
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .textArea {
+      background: linear-gradient(0deg, rgba(2, 122, 106, 0.17) 0.39%, rgba(7, 199, 177, 0.17) 100%), rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      color: #74DAB5;
+      outline: none;
+      border: none;
+      padding: 11px 16px;
+      font-family: 'Montserrat';
+      box-shadow: 0 0.5rem 1rem 0 #039b7f;
+      font-size: 16px;
+    }
+
+    .progressStepsContainer {
+      color: #11ffe0;
+
+      .progressStep {
+        height: 47px;
+        width: 47px;
+        border: 2px solid;
+        font-size: 25px;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        font-weight: 600;
+
+        &:before {
+          content: "шаг";
+          position: absolute;
+          font-size: 13px;
+          bottom: -23px;
+        }
+      }
+
+      .progressMessage {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.notActive {
+  opacity: .3;
 }
