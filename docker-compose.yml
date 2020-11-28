@@ -4,7 +4,7 @@ services:
   django:
     build: ./backend
     volumes:
-      - ./backend:/api/backend
+      - ./backend:/app/
     ports:
       - "8000:8000"
 
