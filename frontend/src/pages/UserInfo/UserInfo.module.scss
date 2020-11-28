@@ -1,11 +1,73 @@
+.backArrow {
+  position: absolute;
+  top: 60px;
+  left: 80px;
+  cursor: pointer;
+  color: #0ec2ad;
+}
+
 .container {
-  height: 100vh;
+  position: relative;
+  .avatarContainer {
+    .avatarBackground {
+                        border-radius: 50%;
+                        height: 205px;
+                        width: 205px;
+                        background: radial-gradient(49.3% 49.3% at 30.99% 22.54%, rgba(0, 255, 209, 0.2) 0%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(0deg, #027A6A 0.39%, #07C7B1 100%);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        margin-top: 90px;
+                        margin-bottom: 50px;
+
+                        .avatar {
+                        height: 185px;
+                        width: 185px;
+                        overflow: hidden;
+                        border-radius: 50%;
+                        background-position: center;
+                        background-size: cover;
+                        }
+                        }
+    .vkIcon {
+      font-size: 20px;
+      color: #0ec2ad;
+      vertical-align: bottom;
+    }
+
+    .userName {
+      margin-top: 16px;
+    }
+
+    h6 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+
+
+    }
+  }
+
+  .dataContainer {
+    padding: 0 16px;
+    max-width: 400px;
+
+    .dataItem {
+      margin-bottom: 20px;
+      span {
+        font-size: 18px;
+        &:first-child {
+          font-weight: 600;
+        }
+        &:last-child {
+          color: #0ec2ad;
+        }
+      }
+    }
+
+  }
+
 }
 
-.containerItem:first-child {
-  background: blue;
-}
-
-.containerItem:last-child {
-  background: yellow;
-}
