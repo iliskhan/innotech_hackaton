@@ -36,4 +36,8 @@ COPY . /app/backend/
 
 RUN pip3 install -r requirements.txt
 
+RUN chmod +x cmd.sh
+
 EXPOSE 8000
+
+CMD ["./cmd.sh"]
