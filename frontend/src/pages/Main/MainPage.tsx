@@ -1,12 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './MainPage.module.scss';
 import classNames from "classnames";
 import Grid from '@material-ui/core/Grid';
 import backgroundGreenGradient from '../../assets/images/background-green-gradient.png';
-import { Icon, CircularProgress } from '@material-ui/core';
+import {Icon, CircularProgress} from '@material-ui/core';
+import axios from 'axios';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCloudUploadAlt} from '@fortawesome/free-solid-svg-icons'
 
 const MainPage = () => {
     const cx = classNames.bind(styles);
+    const [loading, setLoading] = useState(false);
+    const [showUploadImageForm, setShowUploadImageForm] = useState(true);
+
+    async function onSendLinks() {
+        setLoading(true);
+        const response = await axios.post('https://postman-echo.com/post', {hello: 'hello'},);
+        setLoading(false);
+        setShowUploadImageForm(true);
+    }
 
     return (
         <Grid className={cx(styles.container)} container
@@ -31,39 +43,60 @@ const MainPage = () => {
                     </p>
                     <Grid className={cx(styles.progressStepsContainer)} container alignItems="center">
                         <Grid item xs={2}>
-                            <span className={cx(styles.progressStep)}>1</span>
+                            <span
+                                className={cx(styles.progressStep, {[styles.notActive]: showUploadImageForm})}>1</span>
                         </Grid>
                         <Grid item className={cx(styles.progressMessage)} xs={8}>
-                            Добавьте ссылки
+                            {!showUploadImageForm ? 'Добавьте ссылки' : 'Загрузите фото для поиска'}
                         </Grid>
-                       <Grid item xs={2}>
-                           <span className={cx(styles.progressStep, styles.notActive)}>2</span>
-                       </Grid>
+                        <Grid item xs={2}>
+                            <span
+                                className={cx(styles.progressStep, {[styles.notActive]: !showUploadImageForm})}>2</span>
+                        </Grid>
                     </Grid>
 
                     {/*TODO: change text input after button clicked*/}
-                    <textarea rows={12} className={cx(styles.textArea)}>
-                    </textarea>
-                    <button className={cx(styles.submitLinksButton)}>
-                         ОТПРАВИТЬ
-                    </button>
+                    {!showUploadImageForm && <>
+                        <textarea rows={12} className={cx(styles.textArea, {[styles.notActive]: loading})}>
+                        </textarea>
+                        <button disabled={loading} onClick={onSendLinks}
+                                className={cx(styles.submitLinksButton, {[styles.notActive]: loading})}>
+                             <span className={cx({[styles.hide]: loading})}>
+                            ОТПРАВИТЬ
 
+                             </span>
+                            {loading && <CircularProgress
+                                style={{
+                                    color: 'white',
+                                    position: 'absolute',
+                                    right: '43%',
+                                    top: '17px'
+                                }} size={16}/>}
+                        </button>
+                    </>
+                    }
                     {/*TODO: upload Image*/}
-                    {/*<div className={cx(styles.uploadImageButton)}>*/}
-                    {/*    /!*<Icon>*!/*/}
-                    {/*    /!*    backup*!/*/}
-                    {/*    /!*</Icon>*!/*/}
-                    {/*    */}
-                    {/*    /!*TODO: add spinner when loading*!/*/}
-                    {/*    <CircularProgress style={{color: 'white'}} size={50} />*/}
-                    {/*</div>*/}
-                    {/*<div className={cx(styles.infoBeforeUpdload)}>*/}
+                    {
+                        showUploadImageForm &&
+                        <>
+                            <div className={cx(styles.uploadImageButton)}>
+                                {/*<Icon>*/}
+                                {/*    backup*/}
+                                {/*</Icon>*/}
+                                <FontAwesomeIcon style={{fontSize: '52px'}} icon={faCloudUploadAlt}/>
 
-                    {/*</div>*/}
+                                {/*TODO: add spinner when loading*/}
+                                {/*<CircularProgress style={{color: 'white'}} size={50} />*/}
+                            </div>
+                            <div className={cx(styles.infoBeforeUpdload)}>
+
+                            </div>
+                        </>
+                    }
                 </div>
             </Grid>
         </Grid>
     );
 };
 
-export { MainPage };
+export {MainPage};

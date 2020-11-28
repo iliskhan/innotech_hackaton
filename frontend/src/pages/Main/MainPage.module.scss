@@ -41,6 +41,7 @@
     .uploadImageButton {
       border-radius: 50%;
       height: 205px;
+      opacity: .85;
       width: 205px;
       background: radial-gradient(49.3% 49.3% at 30.99% 22.54%, rgba(0, 255, 209, 0.2) 0%, rgba(255, 255, 255, 0) 100%),
       linear-gradient(0deg, #027A6A 0.39%, #07C7B1 100%);
@@ -82,6 +83,7 @@
         justify-content: center;
         position: relative;
         font-weight: 600;
+        transition: opacity 1s ease-out;
 
         &:before {
           content: "шаг";
@@ -110,11 +112,13 @@
       width: 100% !important;
       max-width: 374px;
       margin-bottom: 37px;
+      transition: opacity .3s ease-out;
     }
 
 
     .submitLinksButton {
       max-width: 169px;
+      position: relative;
       width: 100%;
       margin: 0 auto;
       background: linear-gradient(2.97deg, #027A6A -19.33%, #07C7B1 97.54%);
@@ -123,13 +127,20 @@
       font-weight: 600;
       border: none;
       border-radius: 25px;
+      cursor: pointer;
+      outline: none;
       padding: 16px;
       font-size: 14px;
       color: #fff;
+      transition: opacity .3s ease-out;
     }
   }
 }
 
 .notActive {
-  opacity: .3;
+  opacity: .2;
+}
+
+.hide {
+  visibility: hidden;
 }
