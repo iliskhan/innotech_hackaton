@@ -11,9 +11,11 @@
     transform: translateY(-50%);
     width: 100%;
     h1 {
-      font-size: 60px;
+      margin-top: 0;
+      font-size: 90px;
       font-weight: 900;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
+      line-height: 1;
     }
 
     p {
@@ -31,29 +33,43 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 
     padding: 0 10%;
 
-    .rightItemTitle {
-      color: #fff;
-      font-size: 20px;
+    .uploadImageButton {
+      border-radius: 50%;
+      height: 205px;
+      width: 205px;
+      background: radial-gradient(49.3% 49.3% at 30.99% 22.54%, rgba(0, 255, 209, 0.2) 0%, rgba(255, 255, 255, 0) 100%),
+      linear-gradient(0deg, #027A6A 0.39%, #07C7B1 100%);
+      margin-bottom: 37px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+
+      span {
+        font-size: 60px;
+      }
     }
 
-    .textArea {
-      background: linear-gradient(0deg, rgba(2, 122, 106, 0.17) 0.39%, rgba(7, 199, 177, 0.17) 100%), rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      color: #74DAB5;
-      outline: none;
-      border: none;
-      padding: 11px 16px;
-      font-family: 'Montserrat';
-      box-shadow: 0 0.5rem 1rem 0 #039b7f;
-      font-size: 16px;
+    .infoBeforeUpdload {
+      padding: 47px;
+    }
+
+    .itemTitle {
+      color: #fff;
+      font-size: 20px;
+      max-width: 508px;
     }
 
     .progressStepsContainer {
       color: #11ffe0;
+      max-width: 374px;
+      margin-top: 80px;
+      margin-bottom: 67px;
 
       .progressStep {
         height: 47px;
@@ -78,6 +94,38 @@
       .progressMessage {
         font-size: 14px;
       }
+    }
+
+    .textArea {
+      background: linear-gradient(0deg, rgba(2, 122, 106, 0.17) 0.39%, rgba(7, 199, 177, 0.17) 100%), rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      resize: none;
+      color: #74DAB5;
+      outline: none;
+      border: none;
+      padding: 11px 16px;
+      font-family: 'Montserrat';
+      box-shadow: 0 0.5rem 1rem 0 #039b7f;
+      font-size: 16px;
+      width: 100% !important;
+      max-width: 374px;
+      margin-bottom: 37px;
+    }
+
+
+    .submitLinksButton {
+      max-width: 169px;
+      width: 100%;
+      margin: 0 auto;
+      background: linear-gradient(2.97deg, #027A6A -19.33%, #07C7B1 97.54%);
+      font-family: Montserrat;
+      font-style: normal;
+      font-weight: 600;
+      border: none;
+      border-radius: 25px;
+      padding: 16px;
+      font-size: 14px;
+      color: #fff;
     }
   }
 }
