@@ -10,6 +10,12 @@ import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
 import styles from './MainPage.module.scss';
 import backgroundGreenGradient from '../../assets/images/background-green-gradient.png';
 
+export const headers = {
+    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
+    'Access-Control-Allow-Origin': '*',
+    'content-type': 'application/json; charset=utf-8'
+}
+
 const MainPage = () => {
     const cx = classNames.bind(styles);
     const [loading, setLoading] = useState(false);
@@ -24,7 +30,7 @@ const MainPage = () => {
         setLoading(true);
 
         // TODO: change to real 'endpoint' and 'payload'
-        await axios.post('https://postman-echo.com/post', {hello: 'hello'});
+        await axios.post('http://localhost:8000/vk/', {hello: 'hello'}, {headers});
         setLoading(false);
         setShowUploadImageForm(true);
     }
