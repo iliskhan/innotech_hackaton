@@ -64,7 +64,6 @@ class VkParser:
         self.app_id = os.environ.get("APP_ID")
         self.login = os.environ.get("LOGIN")
         self.password = os.environ.get("PASSWORD")
-        # print("ROIJSOIFJD", login, password)
 
 
         ssl._create_default_https_context = ssl._create_unverified_context
@@ -118,7 +117,9 @@ class VkParser:
 
             temp = data['face_features']
 
-            if not [element.get(user_data['id']) for element in temp]:
+            ids = [list(element.keys())[0] for element in temp]
+
+            if not str(user_data['id']) in ids:
                 temp.append({user_data['id']: face_features})
 
         write_json(data, filename='/app/main/face_features.json')
@@ -179,10 +180,17 @@ class VkApiView(APIView):
 
 
         vk_user_data['vk_user_id'] = vk_user_data['id']
-        vk_user_data['country'] = vk_user_data['country']['title']
-        vk_user_data['bdate'] = '-'.join(list(reversed(vk_user_data['bdate'].split('.'))))
+        if  vk_user_data.get('country'):
+            vk_user_data['country'] = vk_user_data['country']['title']
+
+        if vk_user_data.get('bdate'):
+            vk_user_data['bdate'] = '-'.join(list(reversed(vk_user_data['bdate'].split('.'))))
+            if len(vk_user_data['bdate']) < 8:
+                vk_user_data['bdate'] = None
         vk_user_data['avatar'] = vk_user_data['photo_max_orig']
         serializer = VkUserDataSerializer(data=vk_user_data)
+        if vk_user_data.get('city'):
+            vk_user_data['city'] = vk_user_data['city']['title']
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
