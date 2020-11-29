@@ -27,6 +27,7 @@ class VkUserOccupation(models.Model):
 
 
 class VkUserPersonal(models.Model):
+    NO_POLITICS = 0
     COMMUNIST = 1
     SOCIALIST = 2
     MODERATE = 3
@@ -38,6 +39,7 @@ class VkUserPersonal(models.Model):
     LIBERTARIAN = 9
 
     POLITICAL_CHOICES = (
+        (NO_POLITICS, 'Не указано'),
         (COMMUNIST, 'Коммунистические'),
         (SOCIALIST, 'Социалистические'),
         (MODERATE, 'Умеренные'),
@@ -49,6 +51,7 @@ class VkUserPersonal(models.Model):
         (LIBERTARIAN, 'Либертарианские')
     )
 
+    NONE = 0
     FULLY_NEGATIVE = 1
     NEGATIVE = 2
     COMPROMISS = 3
@@ -56,6 +59,7 @@ class VkUserPersonal(models.Model):
     APPROVE = 5
 
     BAD_HABIT_CHOICES = (
+        (NONE, 'Не указано'),
         (FULLY_NEGATIVE, 'Резко негативное'),
         (NEGATIVE, 'Негативное'),
         (COMPROMISS, 'Компромиссное'),
@@ -91,7 +95,7 @@ class VkUserData(models.Model):
     contacts = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=255, blank=True, null=True)
     interests = models.CharField(max_length=255, blank=True, null=True)
-    education = models.OneToOneField(VkUserEducation, on_delete=models.CASCADE)
-    occupation = models.OneToOneField(VkUserOccupation, on_delete=models.CASCADE)
-    personal = models.OneToOneField(VkUserPersonal, on_delete=models.CASCADE)
+    education = models.OneToOneField(VkUserEducation, on_delete=models.CASCADE, null=True, blank=True)
+    occupation = models.OneToOneField(VkUserOccupation, on_delete=models.CASCADE, null=True, blank=True)
+    personal = models.OneToOneField(VkUserPersonal, on_delete=models.CASCADE, null=True, blank=True)
     sex = models.CharField(max_length=255, blank=True, null=True, choices=GENDER)
