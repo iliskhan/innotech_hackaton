@@ -14,6 +14,11 @@ from scipy.spatial import distance
 from pathlib import Path
 
 
+def write_json(data, filename='data.json'):
+    with open(filename,'w') as f:
+        json.dump(data, f, indent=4)
+
+
 class VkParser:
     def __init__(self):
 
@@ -45,7 +50,6 @@ class VkParser:
             load_dotenv(dotenv_path)
 
         token = os.environ.get("TOKEN")
-        print(dotenv_path)
 
         app_id = os.environ.get("APP_ID")
         login = os.environ.get("LOGIN")
@@ -75,11 +79,11 @@ class VkParser:
         for i, d in enumerate(dets):
             shape = self.sp(image, d)
 
-            face_descriptor = np.array(self.facerec.compute_face_descriptor(image, shape), dtype=np.float64)
+            face_descriptor = tuple(self.facerec.compute_face_descriptor(image, shape))
 
             face_features.append(face_descriptor)
 
-        return np.array(face_features)
+        return face_features
 
     def url_to_image(self, image_url):
 
@@ -100,6 +104,15 @@ class VkParser:
         face_features = self.get_face_features(image)
 
         user_data.update({'face_features': face_features})
+        with open('face_features.json', encoding='utf8') as ff:
+            data = json.load(ff)
+
+            temp = data['face_features']
+
+            if not [element.get(user_data['id']) for element in temp]:
+                temp.append({user_data['id']: face_features})
+
+        write_json(data, filename='face_features.json')
 
         return user_data
 
