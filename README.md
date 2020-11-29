@@ -8,8 +8,8 @@
 # Запуск проекта:
 
   - скопировать файл .env.dev в папку backend и переименовать в .env
-  - добавить в .env VK Token. Сделать его можно по ссылке https://vk.com/apps?act=manage
-  - если нету на компьютере, то установить docker-compose по ссылке https://docs.docker.com/compose/install/
+  - добавить в .env VK Token. Сделать его можно по ссылке, создав Standalone-приложение https://vk.com/apps?act=manage
+  - если нет на компьютере, то установить docker-compose по ссылке https://docs.docker.com/compose/install/
   - в корне проекта (innotech_hackaton) запустить команду: 
     ```sh
     $ docker-compose up -d --build
@@ -34,6 +34,6 @@
 
 * [ReactJS] - фронтенд фреймворк
 * [Django] - бэкенд фреймворк
-* [JavaScript] - язык программирования
+* [TypeScript] - язык программирования
 * [Python] - язык программирования
 
