@@ -76,6 +76,8 @@ class VkParser:
         self.sp = dlib.shape_predictor(predictor_path)
         self.facerec = dlib.face_recognition_model_v1(face_rec_model_path)
 
+        self.face_features_path = '/app/main/face_features.json'
+
     def get_face_features(self, image):
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -110,7 +112,7 @@ class VkParser:
 
         face_features = self.get_face_features(image)
 
-        with open('/app/main/face_features.json', encoding='utf8') as ff:
+        with open(self.face_features_path, encoding='utf8') as ff:
             data = json.load(ff)
 
             temp = data['face_features']
@@ -120,9 +122,49 @@ class VkParser:
             if not str(user_data['id']) in ids:
                 temp.append({user_data['id']: face_features})
 
-        write_json(data, filename='/app/main/face_features.json')
+        write_json(data, filename=self.face_features_path)
 
         return user_data
+
+    def recognition(self, image):
+
+        image = np.asarray(bytearray(image), dtype="uint8")
+        image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+        # image = cv2.imread(image)
+        #
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+        dets, scores, idx = self.detector.run(image, 1, 0.5)
+
+        incoming_face_feature = None
+
+        for i, d in enumerate(dets):
+            shape = self.sp(image, d)
+
+            incoming_face_feature = np.array(
+                self.facerec.compute_face_descriptor(image, shape), dtype=np.float64)
+
+        with open(self.face_features_path, "r", encoding="utf8") as ff:
+            face_features = json.load(ff)
+
+        ids_with_errors = []
+
+        face_features = face_features['face_features']
+
+        for item in face_features:
+            for face_feature in item.values():
+                if len(face_feature) == 0:
+                    break
+
+                face_feature = np.array(face_feature)
+
+                ids_with_errors.append(
+                    {"id": item.keys(), "error": distance.euclidean(face_feature, incoming_face_feature)})
+
+        min_error = min(ids_with_errors, key=lambda x: x['error'])
+        if min_error['error'] > 0.6:
+            return None
+        return list(min_error["id"])[0]
 
 
 vk_parser = VkParser()
@@ -203,9 +245,10 @@ class VkApiView(APIView):
 
 class VkImageApiView(APIView):
     def post(self, request):
-        image = request.data['image']
-        # call Iliskhans method
-        vk_user_id = ''
+        image = request.data['image'].read()
+        vk_user_id = vk_parser.recognition(image)
+        if not vk_user_id:
+            return Response('Пользователь не найден', status=status.HTTP_404_NOT_FOUND)
         vk_user = VkUserData.objects.filter(vk_user_id=vk_user_id).first()
         serializer = VkUserDataDetailSerializer(vk_user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
