@@ -79,8 +79,6 @@ def get_from_fssp_info(
     birthdate,
 ):
 
-    d = {'status': 'success', 'code': 0, 'exception': '', 'response': {'status': 0, 'task_start': '2020-11-28 20:16:44', 'task_end': '2020-11-28 20:16:45', 'result': [{'status': 0, 'query': {'type': 1, 'params': {'region': '-1', 'firstname': 'варламов', 'secondname': None, 'lastname': 'илья', 'birthdate': None}}, 'result': []}]}}
-
     data = {
         "token": "J9PeHtr5m1xw",
         "region": region,
