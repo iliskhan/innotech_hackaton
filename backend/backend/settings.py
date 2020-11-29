@@ -25,7 +25,7 @@ SECRET_KEY = 'm_i=vd_veqi1#i1$6ertdof+2*s--v5l48_i$00-q+2kfx94=a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
