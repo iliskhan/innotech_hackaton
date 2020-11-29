@@ -6,10 +6,12 @@ import dlib
 import urllib
 
 import numpy as np
+import ssl
 
 from pprint import pprint
 from dotenv import load_dotenv
 from scipy.spatial import distance
+from pathlib import Path
 
 
 class VkParser:
@@ -37,16 +39,19 @@ class VkParser:
 
         self.version = 5.126
 
-        dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+        dotenv_path = os.path.join(Path(__file__).resolve().parent.parent.parent, '.env')
 
         if os.path.exists(dotenv_path):
             load_dotenv(dotenv_path)
 
         token = os.environ.get("TOKEN")
+        print(dotenv_path)
 
         app_id = os.environ.get("APP_ID")
         login = os.environ.get("LOGIN")
         password = os.environ.get("PASSWORD")
+
+        ssl._create_default_https_context = ssl._create_unverified_context
 
         session = vk.AuthSession(app_id=app_id, user_login=login,
                                  user_password=password, scope=4)
@@ -103,4 +108,4 @@ if __name__ == "__main__":
     vk_parser = VkParser()
 
     pprint(vk_parser.get_user_data_by_url("https://vk.com/iliskhan_gudaev"))
-    pprint(vk_parser.get_user_data_by_url("https://vk.com/lomali93"))
+    # pprint(vk_parser.get_user_data_by_url("https://vk.com/lomali93"))
