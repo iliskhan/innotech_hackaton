@@ -6,7 +6,7 @@ def inn_parser(fio):
     url = 'https://kontragent.skrin.ru/SearchIchp/IchpDoSearch'
 
     data = {
-        "ruler": "Лом-Али Якубов",
+        "ruler": fio,
         "reg_type": 1,
         "reg_excl": 0,
         "ind_main": 0,
@@ -24,7 +24,10 @@ def inn_parser(fio):
     task = requests.post(url, data=data)
     s = BeautifulSoup(task.text, 'html.parser')
 
-    inn = s.find('span', 'code_title_ip', text='ИНН:').parent.contents[1]
+    try:
+        inn = s.find('span', 'code_title_ip', text='ИНН:').parent.contents[1]
+    except:
+        inn = None
 
     return inn
 
