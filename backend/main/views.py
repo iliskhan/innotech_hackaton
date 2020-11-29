@@ -15,9 +15,7 @@ import ssl
 
 from dotenv import load_dotenv
 from scipy.spatial import distance
-from pathlib import Path
 from django.conf import settings
-import vk_requests
 
 
 from .models import VkUserPersonal, VkUserData, VkUserEducation, VkUserOccupation, OccupationType
@@ -132,8 +130,6 @@ vk_parser = VkParser()
 
 class VkApiView(APIView):
 
-    def get(self, request):
-        pass
 
     @transaction.atomic
     def post(self, request):
@@ -205,4 +201,11 @@ class VkApiView(APIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-
+class VkImageApiView(APIView):
+    def post(self, request):
+        image = request.data['image']
+        # call Iliskhans method
+        vk_user_id = ''
+        vk_user = VkUserData.objects.filter(vk_user_id=vk_user_id).first()
+        serializer = VkUserDataDetailSerializer(vk_user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
