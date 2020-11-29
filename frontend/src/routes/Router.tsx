@@ -36,7 +36,7 @@ const Router: React.FC = () => (
         <Route key={route.url} exact={route.exact} path={route.url} component={route.page}/>
     ))}
     <Route path="/" exact>
-      <Redirect to="/user-info" />
+      <Redirect to="/home" />
     </Route>
   </div>
 );
