@@ -31,13 +31,12 @@ RUN cd ~ && \
     python3 setup.py install --yes USE_AVX_INSTRUCTIONS
 
 
-WORKDIR /app/backend/
-COPY . /app/backend/
+WORKDIR /app/
+COPY . /app/
 
 RUN pip3 install -r requirements.txt
-
-RUN chmod +x cmd.sh
-
 EXPOSE 8000
+CMD ['python', 'manage.py', 'migrate']
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-CMD ["./cmd.sh"]
+
