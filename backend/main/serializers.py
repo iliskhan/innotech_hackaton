@@ -33,5 +33,5 @@ class VkUserDataDetailSerializer(serializers.ModelSerializer):
     education = VkUserEducationSerializer(read_only=True)
 
     class Meta:
-        model = VkUserPersonal
+        model = VkUserData
         fields = '__all__'
