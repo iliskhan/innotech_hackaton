@@ -71,7 +71,7 @@ with data in result ============================================================
     }
 """
 
-def get_from_fssp_info(
+def __get_info_from_fssp(
     firstname,
     secondname,
     lastname,
@@ -99,6 +99,29 @@ def get_from_fssp_info(
     result = requests.get(base_url + "result", params=data_task).json()
     while result.get('response')['status'] != 0:
         result = requests.get(base_url + "result", params=data_task).json()
-        sleep(2)
+        sleep(0.5)
+
+    return result
+
+def get_person_debts(
+    lastname,
+    firstname,
+    secondname = "",
+    birthdate = "",
+):
+    result_moscow = __get_info_from_fssp(firstname, secondname, lastname, "77", birthdate)
+    result_piter = __get_info_from_fssp(firstname, secondname, lastname, "78", birthdate)
+
+    try:
+        result_moscow = result_moscow['response']['result'][0]['result']
+    except:
+        result_moscow = []
+    
+    try:
+        result_piter = result_piter['response']['result'][0]['result']
+    except:
+        result_piter = []
+
+    result = result_moscow + result_piter
 
     return result
