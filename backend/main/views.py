@@ -144,6 +144,8 @@ class VkParser:
             incoming_face_feature = np.array(
                 self.facerec.compute_face_descriptor(image, shape), dtype=np.float64)
 
+
+
         with open(self.face_features_path, "r", encoding="utf8") as ff:
             face_features = json.load(ff)
 
@@ -175,7 +177,7 @@ class VkApiView(APIView):
 
     @transaction.atomic
     def post(self, request):
-        vk_link = request.data
+        vk_link = request.data.get('link')
         vk_user_data = vk_parser.get_user_data_by_url(vk_link)
         education, personal, occupation = None, None, None
         if vk_user_data.get('occupation'):
