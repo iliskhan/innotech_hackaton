@@ -38,6 +38,10 @@
 
     padding: 0 10%;
 
+    .inputFileField {
+      display: none;
+    }
+
     .uploadImageButton {
       border-radius: 50%;
       height: 205px;
@@ -46,10 +50,16 @@
       background: radial-gradient(49.3% 49.3% at 30.99% 22.54%, rgba(0, 255, 209, 0.2) 0%, rgba(255, 255, 255, 0) 100%),
       linear-gradient(0deg, #027A6A 0.39%, #07C7B1 100%);
       margin-bottom: 37px;
+      cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
+      transition: all .3s ease-out;
+      &:hover {
+        color: rgba(255, 255, 255, 1);
+        box-shadow: 0px -3px 15px rgba(13, 221, 192, .27);
+      }
 
       span {
         font-size: 60px;
@@ -132,15 +142,20 @@
       padding: 16px;
       font-size: 14px;
       color: #fff;
-      transition: opacity .3s ease-out;
+      transition: all .3s ease-out;
+
+      &:hover {
+        color: rgba(255, 255, 255, 1);
+        box-shadow: 0px -3px 15px rgba(13, 221, 192, .27);
+      }
     }
   }
 }
 
 .notActive {
-  opacity: .2;
+  opacity: .2 !important;
 }
 
 .hide {
-  visibility: hidden;
+  visibility: hidden !important;
 }

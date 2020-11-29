@@ -7,13 +7,22 @@ import avatarPlaceholder from '../../assets/images/avatar_placeholder.jpg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faVk} from '@fortawesome/free-brands-svg-icons'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { useHistory } from 'react-router-dom';
 
-const UserInfo = () => {
+type IProps = any;
+
+const UserInfo = (props: IProps) => {
+    const history = useHistory();
     const cx = classNames.bind(styles);
+    const fetchedData = props.location.state?.referrer;
+    console.log(fetchedData);
+
+    // TODO: change this when backend will be ready
+    const [avatar] = Object.values(fetchedData.files);
 
     return (
         <>
-            <FontAwesomeIcon className={cx(styles.backArrow)} icon={faArrowLeft} />
+            <FontAwesomeIcon onClick={() => history.push('/')} className={cx(styles.backArrow)} icon={faArrowLeft} />
             <Grid
                 container
                 direction="column"
@@ -29,7 +38,7 @@ const UserInfo = () => {
                 >
                     <div className={cx(styles.avatarBackground)}>
                         <div className={cx(styles.avatar)}
-                             style={{backgroundImage: `url(${avatarPlaceholder})`,}}>
+                             style={{backgroundImage: `url(${avatar ? avatar : avatarPlaceholder})`,}}>
                         </div>
                     </div>
                     <h6><FontAwesomeIcon className={cx(styles.vkIcon)} icon={faVk}/> Открыть профиль</h6>
