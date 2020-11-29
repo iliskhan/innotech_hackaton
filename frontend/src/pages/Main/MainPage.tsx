@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from "classnames";
 import Grid from '@material-ui/core/Grid';
 import { Redirect } from 'react-router-dom';
@@ -7,13 +7,12 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons'
 
+
 import styles from './MainPage.module.scss';
 import backgroundGreenGradient from '../../assets/images/background-green-gradient.png';
 
 export const headers = {
-    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
-    'Access-Control-Allow-Origin': '*',
-    'content-type': 'application/json; charset=utf-8'
+    'Content-Type': 'application/json'
 }
 
 const MainPage = () => {
@@ -25,12 +24,13 @@ const MainPage = () => {
     //     binary: string | ArrayBuffer | null;
     // } | null>();
     const [response, setResponse] = useState<any>();
+    const textInput: any = useRef(null);
 
     async function onSendLinks() {
         setLoading(true);
 
-        // TODO: change to real 'endpoint' and 'payload'
-        await axios.post('http://localhost:8000/vk/', {hello: 'hello'}, {headers});
+        const vkLink = {"link": textInput.current.value}
+        await axios.post('http://localhost:8000/api/vk/', vkLink);
         setLoading(false);
         setShowUploadImageForm(true);
     }
@@ -56,15 +56,10 @@ const MainPage = () => {
 
             const formData = new FormData();
             // formData.append('name', name ? name : 'uploaded_image');
-            formData.append('file', file);
-            // TODO: change to real 'endpoint'
-            const response = await axios.post('https://postman-echo.com/post', formData);
-            console.log(response)
+            formData.append('image', file);
+            const response = await axios.post('http://localhost:8000/api/vk/image/', formData);
             setResponse(response.data);
-            // setFilePhoto({
-            //     file,
-            //     binary,
-            // })
+
 
         }
     }
@@ -136,7 +131,7 @@ const MainPage = () => {
 
                             </div>
                         </> : <>
-                        <textarea rows={12} className={cx(styles.textArea, {[styles.notActive]: loading})}>
+                        <textarea ref={textInput} rows={12} className={cx(styles.textArea, {[styles.notActive]: loading})}>
                         </textarea>
                             <button disabled={loading} onClick={onSendLinks}
                                     className={cx(styles.submitLinksButton, {[styles.notActive]: loading})}>
